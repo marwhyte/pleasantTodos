@@ -3,30 +3,13 @@ import Todo from "./Todo";
 import { useForm } from "react-hook-form";
 
 interface Props {}
-// const display = (todos: [], filter: string, query: string) => {
-//   var tasksToReturn: [];
-//   var tasksToFilter = todos.filter((task) => {
-//     return task.title.toLowerCase().includes(query.toLowerCase());
-//   });
-//   tasksToFilter.forEach((task) => {
-//     if (filter === "all") {
-//       tasksToReturn.push(task);
-//     } else if (filter === "completed" && task.completed) {
-//       tasksToReturn.push(task);
-//     } else if (filter === "notCompleted" && !task.completed) {
-//       tasksToReturn.push(task);
-//     } else {
-//       tasksToReturn.push(task);
-//     }
-//   });
 
-//   return tasksToReturn;
-// };
 interface task {
   title: string;
   startDate: string;
   endDate: string;
   isCompleted: boolean;
+  id: number;
 }
 interface formInput {
   title: string;
@@ -41,14 +24,32 @@ type Inputs = {
 //   todos: JSON.parse(localStorage.getItem("todos") || "[]"),
 //   count: JSON.parse(localStorage.getItem("todos") || "[]").length,
 // };
+const tasksToDisplay = (todos: task[], filter: string, query: string) => {
+  var returnedTasks: task[] = [];
+  var filteredTasks: task[] = todos.filter((task) => {
+    return task.title.toLowerCase().includes(query.toLowerCase());
+  });
+  filteredTasks.forEach((task: task) => {
+    if (filter === "all") {
+      returnedTasks.push(task);
+    } else if (filter === "completed" && task.isCompleted) {
+      returnedTasks.push(task);
+    } else if (filter === "notCompleted" && !task.isCompleted) {
+      returnedTasks.push(task);
+    }
+  });
+  return returnedTasks;
+};
 
 const Todos: React.FC<Props> = (props: Props) => {
   const { register, handleSubmit } = useForm<Inputs>();
   const [query, setQuery] = React.useState("");
-  const [filterToDos, setFilterToDos] = React.useState();
+  const [filterToDos, setFilterToDos] = React.useState([
+    { title: "", startDate: "", endDate: "", isCompleted: false, id: 0 },
+  ]);
   const [whichFilter, setWhichFilter] = React.useState("all");
   const [todos, setTodos] = React.useState([
-    { title: "", startDate: "", endDate: "", isCompleted: false },
+    { title: "", startDate: "", endDate: "", isCompleted: false, id: 0 },
   ]);
   const [count, setCount] = React.useState(0);
 
@@ -61,8 +62,15 @@ const Todos: React.FC<Props> = (props: Props) => {
       todos = "[]";
     }
     var notStringTodos = JSON.parse(todos || "");
-    if (todos !== null) setTodos(notStringTodos);
+    var todosCount = notStringTodos.length + 1;
+    if (todos !== null) {
+      setTodos(notStringTodos);
+      setCount(todosCount);
+    }
   }, []);
+  React.useEffect(() => {
+    setFilterToDos(tasksToDisplay(todos, whichFilter, query));
+  }, [todos, whichFilter, query]);
   const searching = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
     console.log(event.target.value);
@@ -78,6 +86,7 @@ const Todos: React.FC<Props> = (props: Props) => {
     setWhichFilter("all");
   };
   const addTask = (task: task) => {
+    setCount((count) => count + 1);
     var addATodo: task[] = JSON.parse(localStorage.getItem("todos") || "");
     addATodo.push(task);
     if (todos !== undefined) {
@@ -103,11 +112,13 @@ const Todos: React.FC<Props> = (props: Props) => {
       ("00" + date.getSeconds()).slice(-2);
     var endDate = data.endDate + ":00";
     var newEndDate = endDate.replace("T", " ");
+    setCount((value) => value++);
     const newTask: task = {
       title: data.title,
       startDate: dateStr,
       endDate: newEndDate,
       isCompleted: false,
+      id: count,
     };
     console.log(newTask);
     addTask(newTask);
@@ -139,10 +150,10 @@ const Todos: React.FC<Props> = (props: Props) => {
         </div>
       </form>
 
-      {/* {filterToDos &&
+      {filterToDos &&
         filterToDos.map((task) => {
           return <Todo task={task} key={task.id} />;
-        })} */}
+        })}
 
       <p className="todo-count">
         <strong>{count}</strong> {count === 1 ? "item" : "items"} left
