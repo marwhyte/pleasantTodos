@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from "react";
-import Todo from "./compontents/Todo";
 import Todos from "./compontents/Todos";
-import "./App.css";
+import "./App.scss";
 
 function App() {
   const [darkMode, setDarkMode] = useState(getMode());
-  useEffect(() => {
-    localStorage.setItem("darkMode", JSON.stringify(darkMode));
-  }, [darkMode]);
-
   function getMode() {
-    const isReturningUser = "dark" in localStorage;
+    var isReturningUser: boolean | string;
+    var savedMode: boolean;
+    if (
+      localStorage.getItem("darkMode") === "true" ||
+      localStorage.getItem("darkMode") === "false"
+    ) {
+      isReturningUser = "darkMode" in localStorage;
+      savedMode = JSON.parse(localStorage.getItem("darkMode") || "");
+    } else {
+      isReturningUser = "none";
+      savedMode = false;
+    }
     const userHasDark = getPrefScheme();
-    const savedMode = JSON.parse(localStorage.getItem("dark") || "");
-    if (isReturningUser) {
+    if (isReturningUser !== "none") {
       return savedMode;
     } else if (userHasDark) {
       return true;
@@ -22,9 +27,13 @@ function App() {
     }
   }
 
+  useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  }, [darkMode]);
+
   function getPrefScheme() {
     if (!window.matchMedia) return;
-
+    console.log(window.matchMedia("prefers-color-scheme: dark").matches);
     return window.matchMedia("prefers-color-scheme: dark").matches;
   }
   return (
