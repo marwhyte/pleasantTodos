@@ -14,6 +14,8 @@ interface task {
 interface Props {
   task: task;
   key: number;
+  markComplete: (task: task) => void;
+  deleteTask: (task: task) => void;
 }
 
 const Todo: React.FC<Props> = (props: Props) => {
@@ -22,42 +24,45 @@ const Todo: React.FC<Props> = (props: Props) => {
     const currentTime = Date.now();
     const endTime = Date.parse(props.task.endDate);
     const timerTillComplete = endTime - currentTime;
-    setTimer(timerTillComplete);
+    timerTillComplete <= 1000 ? setTimer(0) : setTimer(timerTillComplete);
   }, []);
-  const changeCompleted = () => {
-    const completedStatus = props.task.isCompleted;
-    props.task.isCompleted = !completedStatus;
-  };
 
   return (
-    <div
-      onClick={changeCompleted}
-      className={props.task.isCompleted ? "singleTaskCompleted" : "singleTask"}
-    >
-      <div className="spacing">
-        <p>Task: {props.task.title}</p>
-      </div>
-      <div className="spacingtimer">
-        <Timer initialTime={timer} direction="backward">
-          {() => (
-            <React.Fragment>
-              <Timer.Days />
-              <span> </span> days <span> </span>
-              <Timer.Hours />
-              <span> </span> hours<span> </span>
-              <Timer.Minutes />
-              <span> </span>
-              minutes<span> </span>
-              <Timer.Seconds />
-              <span> </span> seconds<span> </span>
-            </React.Fragment>
+    <div className="withDaTrash">
+      <div
+        onClick={() => props.markComplete(props.task)}
+        className={props.task.isCompleted ? "todoCompleted" : "todo"}
+      >
+        <div className="spacing">
+          <p>Task: {props.task.title}</p>
+        </div>
+        <div className="spacingtimer">
+          {timer === 0 ? (
+            <div>
+              <p>notime</p>
+            </div>
+          ) : (
+            <Timer initialTime={timer} direction="backward">
+              {() => (
+                <React.Fragment>
+                  <Timer.Days />
+                  <span> </span> days <span> </span>
+                  <Timer.Hours />
+                  <span> </span> hours<span> </span>
+                  <Timer.Minutes />
+                  <span> </span>
+                  minutes<span> </span>
+                  <Timer.Seconds />
+                  <span> </span> seconds<span> </span>
+                </React.Fragment>
+              )}
+            </Timer>
           )}
-        </Timer>
+        </div>
       </div>
-
-      {/* <div onClick={deleteTask}>
+      <div onClick={() => props.deleteTask(props.task)}>
         <FontAwesomeIcon className="trash" icon={faTrash} />
-      </div> */}
+      </div>
     </div>
   );
 };

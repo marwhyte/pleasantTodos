@@ -41,10 +41,16 @@
   align-items: center;
   border: 1px solid #2c7873;
   margin-bottom: 1%;
-  border-radius: 15px;
+  border-radius: 7px;
   background-color: #c0ffb3;
   cursor: pointer;
   width: 50%;
+}
+.withDaTrash {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .todoCompleted {
   display: flex;
@@ -79,7 +85,7 @@
   color: #333;
 }
 
-topButtonComplete:hover {
+.topButtonComplete:hover {
   background-color: lightcoral;
   color: black;
 }

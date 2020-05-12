@@ -20,10 +20,6 @@ type Inputs = {
   endDate: string;
 };
 
-// const initialState = {
-//   todos: JSON.parse(localStorage.getItem("todos") || "[]"),
-//   count: JSON.parse(localStorage.getItem("todos") || "[]").length,
-// };
 const tasksToDisplay = (todos: task[], filter: string, query: string) => {
   var returnedTasks: task[] = [];
   var filteredTasks: task[] = todos.filter((task) => {
@@ -42,7 +38,7 @@ const tasksToDisplay = (todos: task[], filter: string, query: string) => {
 };
 
 const Todos: React.FC<Props> = (props: Props) => {
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { register, handleSubmit, errors } = useForm<Inputs>();
   const [query, setQuery] = React.useState("");
   const [filterToDos, setFilterToDos] = React.useState([
     { title: "", startDate: "", endDate: "", isCompleted: false, id: 0 },
@@ -62,10 +58,8 @@ const Todos: React.FC<Props> = (props: Props) => {
       todos = "[]";
     }
     var notStringTodos = JSON.parse(todos || "");
-    var todosCount = notStringTodos.length + 1;
     if (todos !== null) {
       setTodos(notStringTodos);
-      setCount(todosCount);
     }
   }, []);
   React.useEffect(() => {
@@ -73,8 +67,14 @@ const Todos: React.FC<Props> = (props: Props) => {
   }, [todos, whichFilter, query]);
   const searching = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
-    console.log(event.target.value);
   };
+  React.useEffect(() => {
+    const notCompletedTodos = todos.filter(
+      (todo) => todo.isCompleted === false
+    );
+    setCount(notCompletedTodos.length);
+    console.log(todos);
+  }, [todos]);
 
   const completed = () => {
     setWhichFilter("completed");
@@ -86,7 +86,6 @@ const Todos: React.FC<Props> = (props: Props) => {
     setWhichFilter("all");
   };
   const addTask = (task: task) => {
-    setCount((count) => count + 1);
     var addATodo: task[] = JSON.parse(localStorage.getItem("todos") || "");
     addATodo.push(task);
     if (todos !== undefined) {
@@ -94,7 +93,27 @@ const Todos: React.FC<Props> = (props: Props) => {
     }
     var stringedTasks = JSON.stringify(addATodo);
     localStorage.setItem("todos", stringedTasks);
-    console.log("string", stringedTasks);
+  };
+  const markTaskComplete = (task: task) => {
+    var markTodoCompleted: task[] = JSON.parse(
+      localStorage.getItem("todos") || ""
+    );
+    var index = todos.indexOf(task);
+    const isTrueOrFalse = markTodoCompleted[index].isCompleted;
+    markTodoCompleted[index] = {
+      ...markTodoCompleted[index],
+      isCompleted: !isTrueOrFalse,
+    };
+    setTodos(markTodoCompleted);
+    const newTodos = JSON.stringify(markTodoCompleted);
+    localStorage.setItem("todos", newTodos);
+  };
+  const deleteTask = (task: task) => {
+    var deleteTask: task[] = JSON.parse(localStorage.getItem("todos") || "");
+    var returnedArray = deleteTask.filter((item) => item.id !== task.id);
+    setTodos(returnedArray);
+    const stringedReturn = JSON.stringify(returnedArray);
+    localStorage.setItem("todos", stringedReturn);
   };
   const onSubmit = (data: formInput) => {
     var date = new Date();
@@ -112,13 +131,17 @@ const Todos: React.FC<Props> = (props: Props) => {
       ("00" + date.getSeconds()).slice(-2);
     var endDate = data.endDate + ":00";
     var newEndDate = endDate.replace("T", " ");
-    setCount((value) => value++);
+    const lastElement = todos.length;
+
+    var nextID;
+    lastElement === 0 ? (nextID = 1) : (nextID = todos[lastElement - 1].id + 1);
+
     const newTask: task = {
       title: data.title,
       startDate: dateStr,
       endDate: newEndDate,
       isCompleted: false,
-      id: count,
+      id: nextID,
     };
     console.log(newTask);
     addTask(newTask);
@@ -137,8 +160,15 @@ const Todos: React.FC<Props> = (props: Props) => {
             type="text"
             placeholder="Title"
             name="title"
-            ref={register({ min: 1, maxLength: 20 })}
+            ref={register({
+              required: "Required",
+              pattern: {
+                value: /^.{1,50}$/i,
+                message: "Task Name must be 1-50 characters long!",
+              },
+            })}
           />
+          {errors.title && errors.title.message}
 
           <input
             type="datetime-local"
@@ -152,7 +182,14 @@ const Todos: React.FC<Props> = (props: Props) => {
 
       {filterToDos &&
         filterToDos.map((task) => {
-          return <Todo task={task} key={task.id} />;
+          return (
+            <Todo
+              task={task}
+              key={task.id}
+              markComplete={markTaskComplete}
+              deleteTask={deleteTask}
+            />
+          );
         })}
 
       <p className="todo-count">
