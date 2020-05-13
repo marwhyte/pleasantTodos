@@ -1,6 +1,8 @@
 import * as React from "react";
 import Todo from "./Todo";
 import { useForm } from "react-hook-form";
+// @ts-ignore
+import DateTimePicker from "react-datetime-picker";
 
 interface Props {}
 
@@ -48,6 +50,10 @@ const Todos: React.FC<Props> = (props: Props) => {
     { title: "", startDate: "", endDate: "", isCompleted: false, id: 0 },
   ]);
   const [count, setCount] = React.useState(0);
+  const [dateTime, setDateTime] = React.useState("");
+  const [maxDate] = React.useState(
+    new Date(new Date().setFullYear(new Date().getFullYear() + 2))
+  );
 
   React.useEffect(() => {
     var todos;
@@ -129,17 +135,18 @@ const Todos: React.FC<Props> = (props: Props) => {
       ("00" + date.getMinutes()).slice(-2) +
       ":" +
       ("00" + date.getSeconds()).slice(-2);
-    var endDate = data.endDate + ":00";
-    var newEndDate = endDate.replace("T", " ");
     const lastElement = todos.length;
-
+    console.log(dateTime);
+    const endDate = JSON.stringify(dateTime);
+    const endDate1 = endDate.replace("T", " ");
+    const endDate2 = endDate1.replace("Z", "");
     var nextID;
     lastElement === 0 ? (nextID = 1) : (nextID = todos[lastElement - 1].id + 1);
 
     const newTask: task = {
       title: data.title,
       startDate: dateStr,
-      endDate: newEndDate,
+      endDate: endDate2,
       isCompleted: false,
       id: nextID,
     };
@@ -160,6 +167,7 @@ const Todos: React.FC<Props> = (props: Props) => {
             type="text"
             placeholder="Title"
             name="title"
+            className="input"
             ref={register({
               required: "Required",
               pattern: {
@@ -170,13 +178,12 @@ const Todos: React.FC<Props> = (props: Props) => {
           />
           {errors.title && errors.title.message}
 
-          <input
-            type="datetime-local"
-            placeholder="end date"
-            name="endDate"
-            ref={register}
+          <DateTimePicker
+            onChange={(date: string) => setDateTime(date)}
+            value={dateTime}
+            maxDate={maxDate}
           />
-          <input type="submit" className="topButton" placeholder="Submit" />
+          <input type="submit" className="input" placeholder="Submit" />
         </div>
       </form>
 
@@ -202,7 +209,7 @@ const Todos: React.FC<Props> = (props: Props) => {
       <form>
         <input
           type="text"
-          className="bottomInput"
+          className="input"
           placeholder="Search through todos"
           name="search"
           onChange={searching}
@@ -214,7 +221,9 @@ const Todos: React.FC<Props> = (props: Props) => {
       <div className="buttonFlexing">
         <button
           className={
-            whichFilter === "completed" ? "topButtonComplete" : "topButton"
+            whichFilter === "completed"
+              ? "bottomButtonComplete"
+              : "bottomButton"
           }
           onClick={completed}
         >
@@ -222,14 +231,18 @@ const Todos: React.FC<Props> = (props: Props) => {
         </button>
         <button
           className={
-            whichFilter === "notCompleted" ? "topButtonComplete" : "topButton"
+            whichFilter === "notCompleted"
+              ? "bottomButtonComplete"
+              : "bottomButton"
           }
           onClick={notCompleted}
         >
           Not Completed
         </button>
         <button
-          className={whichFilter === "all" ? "topButtonComplete" : "topButton"}
+          className={
+            whichFilter === "all" ? "bottomButtonComplete" : "bottomButton"
+          }
           onClick={all}
         >
           All

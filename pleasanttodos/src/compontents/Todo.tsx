@@ -1,6 +1,6 @@
 import * as React from "react";
 import Timer from "react-compound-timer";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface task {
@@ -23,6 +23,9 @@ const Todo: React.FC<Props> = (props: Props) => {
   React.useEffect(() => {
     const currentTime = Date.now();
     const endTime = Date.parse(props.task.endDate);
+    console.log(props.task.endDate);
+    console.log("e", endTime);
+    console.log("c", currentTime);
     const timerTillComplete = endTime - currentTime;
     timerTillComplete <= 1000 ? setTimer(0) : setTimer(timerTillComplete);
   }, []);
@@ -33,15 +36,13 @@ const Todo: React.FC<Props> = (props: Props) => {
         onClick={() => props.markComplete(props.task)}
         className={props.task.isCompleted ? "todoCompleted" : "todo"}
       >
-        <div className="spacing">
-          <p>Task: {props.task.title}</p>
+        <div className={timer === 0 ? "ExtraSpacing" : "spacing"}>
+          <p className="oneLiner">Task: {props.task.title}</p>
         </div>
-        <div className="spacingtimer">
-          {timer === 0 ? (
-            <div>
-              <p>notime</p>
-            </div>
-          ) : (
+        {timer === 0 ? (
+          <div className="paddingLeft"></div>
+        ) : (
+          <div className="spacingtimer">
             <Timer initialTime={timer} direction="backward">
               {() => (
                 <React.Fragment>
@@ -57,11 +58,11 @@ const Todo: React.FC<Props> = (props: Props) => {
                 </React.Fragment>
               )}
             </Timer>
-          )}
-        </div>
+          </div>
+        )}
       </div>
-      <div onClick={() => props.deleteTask(props.task)}>
-        <FontAwesomeIcon className="trash" icon={faTrash} />
+      <div className="trashIcon" onClick={() => props.deleteTask(props.task)}>
+        <FontAwesomeIcon className="trash" icon={faTimes} />
       </div>
     </div>
   );
