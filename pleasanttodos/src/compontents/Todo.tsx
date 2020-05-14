@@ -39,7 +39,7 @@ const Todo: React.FC<Props> = (props: Props) => {
         <div className={timer === 0 ? "ExtraSpacing" : "spacing"}>
           <p className="oneLiner">Task: {props.task.title}</p>
         </div>
-        {timer === 0 ? (
+        {timer === 0 || isNaN(timer) ? (
           <div className="paddingLeft"></div>
         ) : (
           <div className="spacingtimer">

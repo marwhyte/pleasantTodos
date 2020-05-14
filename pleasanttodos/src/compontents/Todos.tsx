@@ -3,6 +3,8 @@ import Todo from "./Todo";
 import { useForm } from "react-hook-form";
 // @ts-ignore
 import DateTimePicker from "react-datetime-picker";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {}
 
@@ -153,40 +155,55 @@ const Todos: React.FC<Props> = (props: Props) => {
     console.log(newTask);
     addTask(newTask);
   };
+  const deletedAllCompleted = () => {
+    var deleteCompletedTasks: task[] = JSON.parse(
+      localStorage.getItem("todos") || ""
+    );
+    var returnedArray = deleteCompletedTasks.filter(
+      (item) => item.isCompleted === false
+    );
+    setTodos(returnedArray);
+    const stringedReturn = JSON.stringify(returnedArray);
+    localStorage.setItem("todos", stringedReturn);
+  };
 
   return (
     <div className="wholetodo">
-      <h1>Stay on track with todoify!</h1>
+      <h1>
+        Pleseant Todos <FontAwesomeIcon icon={faClipboardList} />
+      </h1>
       <div className="topFormatting">
-        <p>making all your tasks easily accessible</p>
+        <p>making all your tasks easily accessible </p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <div className="formatForm">
           <input
             type="text"
             placeholder="Title"
             name="title"
-            className="input"
+            className={errors.title ? "topInuptred" : "topInupt"}
             ref={register({
               required: "Required",
               pattern: {
-                value: /^.{1,50}$/i,
-                message: "Task Name must be 1-50 characters long!",
+                value: /^.{1,30}$/i,
+                message: "Task Name must be 1-30 characters long!",
               },
             })}
           />
-          {errors.title && errors.title.message}
 
           <DateTimePicker
             onChange={(date: string) => setDateTime(date)}
             value={dateTime}
             maxDate={maxDate}
+            className="dateandtime"
           />
-          <input type="submit" className="input" placeholder="Submit" />
+          <input type="submit" className="topButton" placeholder="Submit" />
         </div>
       </form>
-
+      <div className="errorrequired">
+        {errors.title && errors.title.message}
+      </div>
       {filterToDos &&
         filterToDos.map((task) => {
           return (
@@ -206,18 +223,23 @@ const Todos: React.FC<Props> = (props: Props) => {
       {/* <button onClick={deleteTasks} className="bottomButton">
         Clear completed
       </button> */}
-      <form>
-        <input
-          type="text"
-          className="input"
-          placeholder="Search through todos"
-          name="search"
-          onChange={searching}
-        />
-        <br></br>
-        {/* <button onClick={}>completed</button>
+      <div className="toolbar">
+        <form className="searchTodos">
+          <input
+            type="text"
+            className="input"
+            placeholder="Search through todos"
+            name="search"
+            onChange={searching}
+          />
+
+          {/* <button onClick={}>completed</button>
         <button onClick={}>not completed</button> */}
-      </form>
+        </form>
+        <button className="topButton" onClick={() => deletedAllCompleted()}>
+          Clear Completed Tasks
+        </button>
+      </div>
       <div className="buttonFlexing">
         <button
           className={
