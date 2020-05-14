@@ -1,7 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap");
-
-.App {
-  text-align: center;
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+html {
+  padding: 0;
+  margin: 0;
+  width: 100%;
 }
 
 .light-mode {
@@ -84,7 +90,7 @@ h1 {
   background-color: #dcdcdc;
   text-decoration: line-through;
   cursor: pointer;
-  width: 850px;
+  width: 780px;
   padding-left: 30px;
   padding-right: 3%;
 }
@@ -197,7 +203,7 @@ h1 {
 
 @media (max-width: 1293px) {
   .withDaTrash {
-    margin-right: 9%;
+    margin-right: 11%;
   }
 }
 
@@ -259,11 +265,20 @@ h1 {
     align-items: center;
     justify-content: center;
   }
+  .errorrequired {
+    width: 100%;
+    text-align: center;
+    margin-left: 90%;
+  }
   .dateandtime {
     margin: 3% 0;
     width: 50%;
   }
   .topInupt {
+    margin-left: 6%;
+    width: 50%;
+  }
+  .topInuptred {
     margin-left: 6%;
     width: 50%;
   }
@@ -273,9 +288,15 @@ h1 {
   .todo {
     width: 2000px;
   }
+  .todoCompleted {
+    width: 2000px;
+  }
 }
 @media (max-width: 425px) {
   .wholetodo {
     margin-left: 40% !important;
+  }
+  .light-mode {
+    font-size: 1.3rem !important;
   }
 }

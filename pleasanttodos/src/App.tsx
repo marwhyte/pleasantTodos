@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Todos from "./compontents/Todos";
 import "./App.scss";
+import Switch from "@material-ui/core/Switch";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 function App() {
   const [darkMode, setDarkMode] = useState(getMode());
@@ -39,9 +41,15 @@ function App() {
   return (
     <div className={darkMode ? "dark-mode" : "light-mode"}>
       <div className="toggle">
-        <button onClick={() => setDarkMode((prevMode: boolean) => !prevMode)}>
-          toggle
-        </button>
+        <FormControlLabel
+          control={
+            <Switch
+              onChange={() => setDarkMode((prevMode: boolean) => !prevMode)}
+              name="checkedA"
+            />
+          }
+          label="Secondary"
+        />
       </div>
       <Todos />
     </div>
