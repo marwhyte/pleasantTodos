@@ -392,6 +392,11 @@ h1 {
     width: 85%;
   }
 }
+@media (max-width: 550px) {
+  .dateandtime {
+    display: none;
+  }
+}
 @media (max-width: 425px) {
   .light-mode {
     font-size: 0.7rem !important;
