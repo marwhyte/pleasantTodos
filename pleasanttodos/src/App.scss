@@ -1,13 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap");
+
 body {
   padding: 0;
   margin: 0;
   width: 100%;
+  position: absolute;
+  min-height: 100vh;
 }
 html {
   padding: 0;
   margin: 0;
   width: 100%;
+  min-height: 100vh;
+  position: absolute;
 }
 
 .light-mode {
@@ -15,13 +20,94 @@ html {
   color: #333;
   font-size: 1.2rem;
   width: 100%;
+  min-height: 100vh;
 }
 
 .dark-mode {
-  background-color: #1a1919;
+  background-color: #121212 !important;
   color: #999;
   font-size: 1.2rem;
   width: 100%;
+  min-height: 100vh;
+  .toggle {
+    background-color: rgb(34, 34, 34) !important;
+  }
+  .wholetodo {
+    background-color: #121212 !important;
+  }
+  .trash {
+    color: #84c9fb !important;
+  }
+  .trash:hover {
+    color: #369de7 !important;
+  }
+  .todo {
+    background-color: #272727 !important;
+    color: #84c9fb;
+  }
+  .todoCompleted {
+    background-color: #84c9fb !important;
+    color: #272727 !important;
+  }
+  .topButton:hover {
+    background-color: #35a4f3 !important;
+  }
+  .bottomButton:hover {
+    background-color: #35a4f3 !important;
+  }
+  .input {
+    background-color: #272727 !important;
+    color: #84c9fb;
+    border: 1px solid rgb(51, 51, 51) !important;
+  }
+  .input::placeholder {
+    color: #84c9fb;
+  }
+  .topInupt {
+    background-color: #272727 !important;
+    color: #84c9fb;
+    border: 1px solid rgb(51, 51, 51) !important;
+  }
+  .topInuptred {
+    background-color: #272727 !important;
+    color: #84c9fb;
+    border: 1px solid red !important;
+  }
+  .dateandtime {
+    background-color: #272727 !important;
+    color: #84c9fb;
+  }
+  .react-datetime-picker__wrapper {
+    background-color: #272727 !important;
+    color: #84c9fb;
+    border: 1px solid rgb(51, 51, 51) !important;
+  }
+  .react-datetime-picker__inputGroup__input {
+    background-color: #272727 !important;
+    color: #84c9fb;
+  }
+  .react-datetime-picker__clear-button__icon {
+    color: #84c9fb;
+    stroke: #84c9fb;
+  }
+  .react-datetime-picker__calendar-button__icon {
+    color: #84c9fb;
+    stroke: #84c9fb;
+  }
+  .topInupt::placeholder {
+    color: #84c9fb;
+  }
+  .topButton {
+    background-color: #84c9fb;
+    white-space: nowrap;
+  }
+  .bottomButton {
+    background-color: #84c9fb;
+    white-space: nowrap;
+  }
+  h1 {
+    color: #84c9fb;
+  }
 }
 .errorrequired {
   margin-right: 480px;
@@ -32,12 +118,19 @@ html {
 h1 {
   color: #f592a1;
 }
+.MuiSwitch-colorSecondary {
+  background-color: green;
+  color: green;
+}
 .wholetodo {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  min-height: 80vh;
+  position: absolute;
+
   font-family: "Raleway", sans-serif;
   .input {
     padding: 8% 4%;
@@ -72,20 +165,19 @@ h1 {
   justify-content: space-between;
   align-items: center;
   border: 1px solid rgb(170, 170, 170);
-  margin-bottom: 1%;
   border-radius: 4px;
   background-color: #bfefff;
   cursor: pointer;
   width: 780px;
   padding-left: 30px;
   padding-right: 3%;
+  margin-bottom: 10px;
 }
 .todoCompleted {
   display: flex;
   justify-content: space-between;
   align-items: center;
   border: 1px solid rgb(170, 170, 170);
-  margin-bottom: 1%;
   border-radius: 4px;
   background-color: #dcdcdc;
   text-decoration: line-through;
@@ -93,6 +185,7 @@ h1 {
   width: 780px;
   padding-left: 30px;
   padding-right: 3%;
+  margin-bottom: 10px;
 }
 .trashIcon {
   padding-left: 10px;
@@ -173,6 +266,14 @@ h1 {
   width: 100%;
   margin-bottom: 2%;
 }
+.toggle {
+  height: 50px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 60px;
+  padding-top: 40px;
+}
 .topButton {
   border: none;
   padding: 1% 3%;
@@ -199,15 +300,16 @@ h1 {
   margin: 0 auto;
   width: 100%;
   text-align: center;
-}
-
-@media (max-width: 1293px) {
-  .withDaTrash {
-    margin-right: 11%;
+  p {
+    margin: 0;
   }
 }
-
-@media (max-width: 1010px) {
+@media (max-width: 1012px) {
+  .dark-mode {
+    width: 100% !important;
+  }
+}
+@media (max-width: 950px) {
   .todo {
     flex-direction: column;
     justify-content: center;
@@ -229,12 +331,12 @@ h1 {
   .spacingtimer {
     margin: 0;
   }
+  .toggle {
+    padding-right: 10px;
+  }
 }
 
 @media (max-width: 900px) {
-  .wholetodo {
-    margin-left: 10px !important;
-  }
   .bottomButton {
     padding: 3% 5%;
     white-space: nowrap;
@@ -255,10 +357,8 @@ h1 {
   .dark-mode {
     font-size: 1rem !important;
   }
-
-  .wholetodo {
-    margin-left: 25% !important;
-    width: 500px;
+  .form {
+    width: 100% !important;
   }
   .formatForm {
     flex-direction: column;
@@ -272,31 +372,48 @@ h1 {
   }
   .dateandtime {
     margin: 3% 0;
-    width: 50%;
+    width: 85%;
   }
   .topInupt {
-    margin-left: 6%;
-    width: 50%;
+    width: 80%;
+    margin-left: 3%;
   }
   .topInuptred {
-    margin-left: 6%;
-    width: 50%;
+    width: 80%;
+    margin-left: 3%;
   }
   .react-datetime-picker__wrapper {
-    padding-left: 100px;
+    padding-left: 0px;
   }
   .todo {
-    width: 2000px;
+    width: 85%;
   }
   .todoCompleted {
-    width: 2000px;
+    width: 85%;
   }
 }
 @media (max-width: 425px) {
-  .wholetodo {
-    margin-left: 40% !important;
-  }
   .light-mode {
-    font-size: 1.3rem !important;
+    font-size: 0.7rem !important;
+  }
+  .dark-mode {
+    font-size: 0.7rem !important;
+  }
+  .toggle {
+    font-size: 1rem;
+  }
+
+  .topInupt {
+    width: 70%;
+    margin-left: 3%;
+  }
+  .topInuptred {
+    width: 70%;
+    margin-left: 3%;
+  }
+}
+@media (max-width: 372px) {
+  .input {
+    display: none;
   }
 }

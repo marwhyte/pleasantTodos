@@ -2,7 +2,27 @@ import React, { useState, useEffect } from "react";
 import Todos from "./compontents/Todos";
 import "./App.scss";
 import Switch from "@material-ui/core/Switch";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { withStyles } from "@material-ui/core/styles";
+import { purple } from "@material-ui/core/colors";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon } from "@fortawesome/free-solid-svg-icons";
+import { faSun } from "@fortawesome/free-solid-svg-icons";
+
+const PurpleSwitch = withStyles({
+  switchBase: {
+    color: purple[300],
+    "&$checked": {
+      color: purple[500],
+    },
+    "&$checked + $track": {
+      color: purple[500],
+      backgroundColor: purple[500],
+    },
+  },
+  checked: {},
+  track: {},
+})(Switch);
 
 function App() {
   const [darkMode, setDarkMode] = useState(getMode());
@@ -41,16 +61,18 @@ function App() {
   return (
     <div className={darkMode ? "dark-mode" : "light-mode"}>
       <div className="toggle">
-        <FormControlLabel
-          control={
-            <Switch
-              onChange={() => setDarkMode((prevMode: boolean) => !prevMode)}
-              name="checkedA"
-            />
-          }
-          label="Secondary"
+        <PurpleSwitch
+          onChange={() => setDarkMode((prevMode: boolean) => !prevMode)}
+          name="checkedA"
+          color="secondary"
         />
+        {darkMode ? (
+          <FontAwesomeIcon color="#FEFCD7" icon={faMoon} />
+        ) : (
+          <FontAwesomeIcon color="#FDB813" icon={faSun} />
+        )}
       </div>
+
       <Todos />
     </div>
   );
