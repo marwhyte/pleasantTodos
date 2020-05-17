@@ -2,26 +2,23 @@ import * as React from "react";
 import Todo from "./Todo";
 import { useForm } from "react-hook-form";
 // @ts-ignore
-import DateTimePicker from "react-datetime-picker";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
 
-interface Props {}
-
 interface task {
   title: string;
-  startDate: string;
-  endDate: string;
   isCompleted: boolean;
   id: number;
 }
+interface Props {
+  query: string;
+  todos: task[];
+}
 interface formInput {
   title: string;
-  endDate: string;
 }
 type Inputs = {
   title: string;
-  endDate: string;
 };
 
 const tasksToDisplay = (todos: task[], filter: string, query: string) => {
@@ -42,20 +39,15 @@ const tasksToDisplay = (todos: task[], filter: string, query: string) => {
 };
 
 const Todos: React.FC<Props> = (props: Props) => {
-  const { register, handleSubmit, errors } = useForm<Inputs>();
-  const [query, setQuery] = React.useState("");
+  const { register, handleSubmit, errors, reset } = useForm<Inputs>();
   const [filterToDos, setFilterToDos] = React.useState([
-    { title: "", startDate: "", endDate: "", isCompleted: false, id: 0 },
+    { title: "", isCompleted: false, id: 0 },
   ]);
   const [whichFilter, setWhichFilter] = React.useState("all");
   const [todos, setTodos] = React.useState([
-    { title: "", startDate: "", endDate: "", isCompleted: false, id: 0 },
+    { title: "", isCompleted: false, id: 0 },
   ]);
   const [count, setCount] = React.useState(0);
-  const [dateTime, setDateTime] = React.useState("");
-  const [maxDate] = React.useState(
-    new Date(new Date().setFullYear(new Date().getFullYear() + 2))
-  );
 
   React.useEffect(() => {
     var todos;
@@ -69,13 +61,12 @@ const Todos: React.FC<Props> = (props: Props) => {
     if (todos !== null) {
       setTodos(notStringTodos);
     }
-  }, []);
+  }, [props.todos]);
+
   React.useEffect(() => {
-    setFilterToDos(tasksToDisplay(todos, whichFilter, query));
-  }, [todos, whichFilter, query]);
-  const searching = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
-  };
+    setFilterToDos(tasksToDisplay(todos, whichFilter, props.query));
+  }, [todos, whichFilter, props.query]);
+
   React.useEffect(() => {
     const notCompletedTodos = todos.filter(
       (todo) => todo.isCompleted === false
@@ -87,12 +78,15 @@ const Todos: React.FC<Props> = (props: Props) => {
   const completed = () => {
     setWhichFilter("completed");
   };
+
   const notCompleted = () => {
     setWhichFilter("notCompleted");
   };
+
   const all = () => {
     setWhichFilter("all");
   };
+
   const addTask = (task: task) => {
     var addATodo: task[] = JSON.parse(localStorage.getItem("todos") || "");
     addATodo.push(task);
@@ -102,6 +96,7 @@ const Todos: React.FC<Props> = (props: Props) => {
     var stringedTasks = JSON.stringify(addATodo);
     localStorage.setItem("todos", stringedTasks);
   };
+
   const markTaskComplete = (task: task) => {
     var markTodoCompleted: task[] = JSON.parse(
       localStorage.getItem("todos") || ""
@@ -116,6 +111,7 @@ const Todos: React.FC<Props> = (props: Props) => {
     const newTodos = JSON.stringify(markTodoCompleted);
     localStorage.setItem("todos", newTodos);
   };
+
   const deleteTask = (task: task) => {
     var deleteTask: task[] = JSON.parse(localStorage.getItem("todos") || "");
     var returnedArray = deleteTask.filter((item) => item.id !== task.id);
@@ -123,123 +119,85 @@ const Todos: React.FC<Props> = (props: Props) => {
     const stringedReturn = JSON.stringify(returnedArray);
     localStorage.setItem("todos", stringedReturn);
   };
+
+  const editATask = (newTitle: string, taskId: number) => {
+    var updatedTitle: task[] = JSON.parse(localStorage.getItem("todos") || "");
+    var returnedArray = updatedTitle.map((task) => {
+      if (task.id === taskId) {
+        task.title = newTitle;
+        return task;
+      } else {
+        return task;
+      }
+    });
+    setTodos(returnedArray);
+    const stringedReturn = JSON.stringify(returnedArray);
+    localStorage.setItem("todos", stringedReturn);
+  };
+
   const onSubmit = (data: formInput) => {
-    var date = new Date();
-    var dateStr =
-      date.getFullYear() +
-      "-" +
-      ("00" + (date.getMonth() + 1)).slice(-2) +
-      "-" +
-      ("00" + date.getDate()).slice(-2) +
-      " " +
-      ("00" + date.getHours()).slice(-2) +
-      ":" +
-      ("00" + date.getMinutes()).slice(-2) +
-      ":" +
-      ("00" + date.getSeconds()).slice(-2);
-    const lastElement = todos.length;
-    console.log(dateTime);
-    const endDate = JSON.stringify(dateTime);
-    const endDate1 = endDate.replace("T", " ");
-    const endDate2 = endDate1.replace("Z", "");
     var nextID;
+    const lastElement = todos.length;
     lastElement === 0 ? (nextID = 1) : (nextID = todos[lastElement - 1].id + 1);
 
     const newTask: task = {
       title: data.title,
-      startDate: dateStr,
-      endDate: endDate2,
       isCompleted: false,
       id: nextID,
     };
     console.log(newTask);
     addTask(newTask);
   };
-  const deletedAllCompleted = () => {
-    var deleteCompletedTasks: task[] = JSON.parse(
-      localStorage.getItem("todos") || ""
-    );
-    var returnedArray = deleteCompletedTasks.filter(
-      (item) => item.isCompleted === false
-    );
-    setTodos(returnedArray);
-    const stringedReturn = JSON.stringify(returnedArray);
-    localStorage.setItem("todos", stringedReturn);
-  };
 
   return (
     <div className="wholetodo">
-      <h1>
-        Pleseant Todos <FontAwesomeIcon icon={faClipboardList} />
-      </h1>
-      <div className="topFormatting">
-        <p>making all your tasks easily accessible </p>
-      </div>
-
-      <form className="form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="formatForm">
-          <input
-            type="text"
-            placeholder="Title"
-            name="title"
-            className={errors.title ? "topInuptred" : "topInupt"}
-            ref={register({
-              required: "Required",
-              pattern: {
-                value: /^.{1,30}$/i,
-                message: "Task Name must be 1-30 characters long!",
-              },
-            })}
-          />
-
-          <DateTimePicker
-            onChange={(date: string) => setDateTime(date)}
-            value={dateTime}
-            maxDate={maxDate}
-            className="dateandtime"
-          />
-          <input type="submit" className="topButton" placeholder="Submit" />
+      <div className="topOfTodos">
+        <h1>
+          Pleseant Todos <FontAwesomeIcon icon={faClipboardList} />
+        </h1>
+        <div className="topFormatting">
+          <p>making all your tasks easily accessible </p>
         </div>
-      </form>
-      <div className="errorrequired">
-        {errors.title && errors.title.message}
+        <div>
+          <form className="form" onSubmit={handleSubmit(onSubmit)}>
+            <div className="formatForm">
+              <div className="inputAndError">
+                <input
+                  type="text"
+                  placeholder="Title"
+                  name="title"
+                  className="topInput"
+                  ref={register({
+                    required: "Required",
+                  })}
+                />
+                <div className="redtext">
+                  {errors.title && errors.title.message}
+                </div>
+              </div>
+              <input type="submit" className="topButton" placeholder="Submit" />
+            </div>
+          </form>
+        </div>
+        <div className="allTodos">
+          {filterToDos &&
+            filterToDos.map((task) => {
+              return (
+                <Todo
+                  task={task}
+                  key={task.id}
+                  markComplete={markTaskComplete}
+                  deleteTask={deleteTask}
+                  editTask={editATask}
+                />
+              );
+            })}
+          <p className="todo-count">
+            <strong>{count}</strong> {count === 1 ? "item" : "items"} left
+          </p>
+        </div>
       </div>
-      {filterToDos &&
-        filterToDos.map((task) => {
-          return (
-            <Todo
-              task={task}
-              key={task.id}
-              markComplete={markTaskComplete}
-              deleteTask={deleteTask}
-            />
-          );
-        })}
 
-      <p className="todo-count">
-        <strong>{count}</strong> {count === 1 ? "item" : "items"} left
-      </p>
-      <br></br>
-      {/* <button onClick={deleteTasks} className="bottomButton">
-        Clear completed
-      </button> */}
-      <div className="toolbar">
-        <form className="searchTodos">
-          <input
-            type="text"
-            className="input"
-            placeholder="Search through todos"
-            name="search"
-            onChange={searching}
-          />
-
-          {/* <button onClick={}>completed</button>
-        <button onClick={}>not completed</button> */}
-        </form>
-        <button className="topButton" onClick={() => deletedAllCompleted()}>
-          Clear Completed Tasks
-        </button>
-      </div>
       <div className="buttonFlexing">
         <button
           className={

@@ -1,53 +1,67 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap");
 
-body {
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  position: absolute;
-  min-height: 100vh;
+$primaryLight: #bfefff;
+$selectedTitleLight: #f592a1;
+$primaryDark: #f4ae95;
+$darkestDark: #1e1e1e;
+$secondDarkestDark: #2c2c2c;
+$greyPrimary: #eceff1;
+$primaryBorderColor: #ccc;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
-html {
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  min-height: 100vh;
-  position: absolute;
-}
-
-.light-mode {
-  background-color: #fff;
-  color: #333;
+.App {
   font-size: 1.2rem;
-  width: 100%;
-  min-height: 100vh;
 }
-
 .dark-mode {
-  background-color: #121212 !important;
+  background-color: $darkestDark !important;
   color: #999;
-  font-size: 1.2rem;
-  width: 100%;
-  min-height: 100vh;
   .toggle {
-    background-color: rgb(34, 34, 34) !important;
+    background-color: $secondDarkestDark !important;
   }
   .wholetodo {
-    background-color: #121212 !important;
+    background-color: $darkestDark !important;
   }
   .trash {
-    color: #84c9fb !important;
+    color: $primaryDark !important;
   }
   .trash:hover {
     color: #369de7 !important;
   }
   .todo {
-    background-color: #272727 !important;
-    color: #84c9fb;
+    background-color: $primaryDark !important;
+    color: #272727 !important;
+
+    .editTask {
+      background-color: $primaryDark !important;
+      border: 1px solid $primaryDark;
+      color: black !important;
+    }
+    .editTask:hover {
+      background-color: #f19a7a !important;
+    }
+    .editTask:focus {
+      background-color: #f19a7a !important;
+      border: 1px solid #0276f1 !important;
+    }
   }
   .todoCompleted {
-    background-color: #84c9fb !important;
-    color: #272727 !important;
+    background-color: #272727 !important;
+    color: $primaryDark;
+    .editTask {
+      background-color: #272727 !important;
+      border: #272727 !important;
+      color: #999 !important;
+    }
+    .editTask:hover {
+      background-color: #444444 !important;
+    }
+    .editTask:focus {
+      background-color: #444444 !important;
+      border: 1px solid #0276f1 !important;
+    }
   }
   .topButton:hover {
     background-color: #35a4f3 !important;
@@ -55,123 +69,86 @@ html {
   .bottomButton:hover {
     background-color: #35a4f3 !important;
   }
-  .input {
+  .bottomInput {
     background-color: #272727 !important;
-    color: #84c9fb;
+    color: $primaryDark;
     border: 1px solid rgb(51, 51, 51) !important;
   }
-  .input::placeholder {
-    color: #84c9fb;
+  .bottomInput::placeholder {
+    color: $primaryDark;
   }
-  .topInupt {
+  .topInput {
     background-color: #272727 !important;
-    color: #84c9fb;
+    color: $primaryDark;
     border: 1px solid rgb(51, 51, 51) !important;
   }
-  .topInuptred {
-    background-color: #272727 !important;
-    color: #84c9fb;
-    border: 1px solid red !important;
+  .topInput::placeholder {
+    color: $primaryDark;
   }
-  .dateandtime {
-    background-color: #272727 !important;
-    color: #84c9fb;
+  .clearButton {
+    background-color: $primaryDark;
   }
-  .react-datetime-picker__wrapper {
-    background-color: #272727 !important;
-    color: #84c9fb;
-    border: 1px solid rgb(51, 51, 51) !important;
+  .clearButton:hover {
+    background-color: #35a4f3 !important;
   }
-  .react-datetime-picker__inputGroup__input {
-    background-color: #272727 !important;
-    color: #84c9fb;
-  }
-  .react-datetime-picker__clear-button__icon {
-    color: #84c9fb;
-    stroke: #84c9fb;
-  }
-  .react-datetime-picker__calendar-button__icon {
-    color: #84c9fb;
-    stroke: #84c9fb;
-  }
-  .topInupt::placeholder {
-    color: #84c9fb;
-  }
+
   .topButton {
-    background-color: #84c9fb !important;
-    white-space: nowrap !important;
+    background-color: $primaryDark !important;
   }
   .bottomButton {
-    background-color: #84c9fb;
-    white-space: nowrap;
+    background-color: $primaryDark;
+  }
+  .clearButton {
+    background-color: $primaryDark;
   }
   h1 {
-    color: #84c9fb;
+    color: $primaryDark;
   }
 }
-.errorrequired {
-  margin-right: 480px;
-  margin-top: 5px;
-  margin-bottom: 2%;
-  color: red;
-}
 h1 {
-  color: #f592a1;
+  color: $selectedTitleLight;
+  margin: 0;
+  margin-top: 120px;
 }
-.MuiSwitch-colorSecondary {
-  background-color: green;
-  color: green;
+.spacing {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .wholetodo {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  min-height: 80vh;
-  position: absolute;
-
   font-family: "Raleway", sans-serif;
-  .input {
-    padding: 8% 4%;
-    border-radius: 4px;
-    border: 1px solid rgb(170, 170, 170);
-  }
-  .topInupt {
-    padding: 2% 4%;
-    border-radius: 4px;
-    border: 1px solid rgb(170, 170, 170);
-    margin-right: 3%;
-  }
-  .topInuptred {
-    padding: 2% 4%;
-    border-radius: 4px;
-    border: 1px solid rgb(170, 170, 170);
-    margin-right: 3%;
-    border-color: red;
-  }
-  .form {
-    width: 1000px;
-  }
-  select {
-    border-radius: 15px;
-    padding: 0% 4%;
-    height: 50px;
-  }
+  width: 100%;
+  min-height: 100vh;
 }
-
 .todo {
   display: flex;
   justify-content: space-between;
   align-items: center;
   border: 1px solid rgb(170, 170, 170);
   border-radius: 4px;
-  background-color: #bfefff;
-  cursor: pointer;
-  width: 780px;
-  padding-left: 30px;
-  padding-right: 3%;
+  background-color: $greyPrimary;
+  width: 450px;
+  min-height: 75px;
   margin-bottom: 10px;
+  .editTask {
+    background-color: $greyPrimary;
+    border: none;
+    font-size: 1rem;
+    border: 1px solid $greyPrimary;
+    padding: 10px 4px;
+    width: 400px;
+  }
+  .editTask:hover {
+    background-color: #d2e1fa;
+  }
+  .editTask:focus {
+    background-color: #ccddfc;
+    border: 1px solid #0276f1;
+  }
 }
 .todoCompleted {
   display: flex;
@@ -179,13 +156,26 @@ h1 {
   align-items: center;
   border: 1px solid rgb(170, 170, 170);
   border-radius: 4px;
-  background-color: #dcdcdc;
+  background-color: #ccc;
   text-decoration: line-through;
-  cursor: pointer;
-  width: 780px;
-  padding-left: 30px;
-  padding-right: 3%;
+  width: 450px;
+  min-height: 75px;
   margin-bottom: 10px;
+  .editTask {
+    background-color: #ccc;
+    border: none;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    padding: 10px 4px;
+    width: 400px;
+  }
+  .editTask:hover {
+    background-color: #d2e1fa;
+  }
+  .editTask:focus {
+    background-color: #ccddfc;
+    border: 1px solid #0276f1;
+  }
 }
 .trashIcon {
   padding-left: 10px;
@@ -193,7 +183,8 @@ h1 {
 }
 
 .oneLiner {
-  white-space: nowrap;
+  word-wrap: break-word;
+  width: 430px;
 }
 .withDaTrash {
   width: 100%;
@@ -201,27 +192,26 @@ h1 {
   justify-content: center;
   align-items: center;
 }
-.dateandtime {
-  height: 57px;
-  width: 320px;
-  font-size: 1rem;
-}
 
 .searchTodos {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 57px;
 }
-.react-datetime-picker__wrapper {
-  border-radius: 5px;
-  border: 1px solid rgb(170, 170, 170);
+.allTodos {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 75px;
 }
-.spacingtimer {
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.topOfTodos {
+  width: 100%;
+  display: flex;
+  min-height: 250px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
 }
-
 .trash {
   color: black;
   cursor: pointer;
@@ -229,13 +219,27 @@ h1 {
 .trash:hover {
   color: red;
 }
-.bottomButton {
+.clearButton {
   border: none;
-  padding: 1% 3%;
-  background-color: #bfefff;
+  padding: 5px;
+  width: 140px;
+  height: 40px;
+  background-color: $primaryLight;
   border-radius: 5px;
   cursor: pointer;
-  margin-right: 1%;
+  margin-left: 10px;
+  margin-top: 15px;
+}
+.bottomButton {
+  border: none;
+  padding: 10px;
+  width: 155px;
+  height: 50px;
+  background-color: $primaryLight;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 .bottomButton:hover {
   background-color: #87d8f3;
@@ -243,182 +247,104 @@ h1 {
 }
 .bottomButtonComplete {
   border: none;
-  padding: 1% 3%;
+  padding: 10px;
+  width: 155px;
+  height: 50px;
   background-color: #ffb6c1;
   border-radius: 5px;
   cursor: pointer;
-  margin-right: 1%;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.formAndClear {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 200px;
+  height: 60px;
+}
+.topInput {
+  padding: 15px;
+  width: 350px;
+  height: 50px;
+  border: 1px solid $primaryBorderColor;
+  border-radius: 5px;
+}
+.bottomInput {
+  padding: 5px;
+  width: 290px;
+  height: 50px;
+  border: 1px solid $primaryBorderColor;
+  border-radius: 5px;
 }
 .bottomButtonComplete:hover {
-  background-color: #f592a1;
+  background-color: $selectedTitleLight;
 }
 .toolbar {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-bottom: 2%;
+  height: 50px;
+  margin-bottom: 15px;
 }
 .buttonFlexing {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-bottom: 2%;
+  margin-bottom: 20px;
 }
 .toggle {
-  height: 50px;
+  width: 100%;
+  height: 80px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  padding-right: 60px;
-  padding-top: 40px;
+  padding-right: 100px;
+  padding-left: 100px;
+  background-color: $greyPrimary;
+  position: fixed;
+  z-index: 3;
+  -webkit-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.3);
 }
 .topButton {
-  border: none !important;
-  padding: 1% 3% !important;
-  background-color: #bfefff !important;
-  border-radius: 5px !important;
-  cursor: pointer !important;
-  margin-left: 2% !important;
+  border: none;
+  padding: 10px;
+  width: 100px;
+  height: 50px;
+  background-color: $primaryLight;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 20px;
 }
 .topButton:hover {
-  background-color: #c0ffb3 !important;
-  color: #333 !important;
+  background-color: #c0ffb3;
+  color: #333;
+}
+.inputAndError {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 .formatForm {
   display: flex;
   width: 100%;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  height: 90px;
 }
-.bottomInput {
-  padding: 4% 6%;
+.redtext {
+  color: rgb(255, 73, 73);
 }
 
+.todo-count {
+  margin: 0;
+}
 .topFormatting {
   margin: 0 auto;
   width: 100%;
   text-align: center;
-  p {
-    margin: 0;
-  }
-}
-@media (max-width: 1012px) {
-  .dark-mode {
-    width: 100% !important;
-  }
-}
-@media (max-width: 950px) {
-  .todo {
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    padding: 0;
-    padding-bottom: 2%;
-    width: 600px;
-    margin-left: 3%;
-  }
-  .todoCompleted {
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    padding: 0;
-    padding-bottom: 2%;
-    width: 600px;
-    margin-left: 3%;
-  }
-  .spacingtimer {
-    margin: 0;
-  }
-  .toggle {
-    padding-right: 10px;
-  }
-}
-
-@media (max-width: 900px) {
-  .bottomButton {
-    padding: 3% 5%;
-    white-space: nowrap;
-  }
-  .bottomButtonComplete {
-    padding: 3% 5%;
-  }
-  .topButton {
-    padding: 2% 4% !important;
-    white-space: nowrap !important;
-  }
-}
-
-@media (max-width: 750px) {
-  .light-mode {
-    font-size: 1rem !important;
-  }
-  .dark-mode {
-    font-size: 1rem !important;
-  }
-  .form {
-    width: 100% !important;
-  }
-  .formatForm {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  .errorrequired {
-    width: 100%;
-    text-align: center;
-    margin-left: 90%;
-  }
-  .dateandtime {
-    margin: 3% 0;
-    width: 85%;
-  }
-  .topInupt {
-    width: 80%;
-    margin-left: 3%;
-  }
-  .topInuptred {
-    width: 80%;
-    margin-left: 3%;
-  }
-  .react-datetime-picker__wrapper {
-    padding-left: 0px;
-  }
-  .todo {
-    width: 85%;
-  }
-  .todoCompleted {
-    width: 85%;
-  }
-}
-@media (max-width: 550px) {
-  .dateandtime {
-    display: none;
-  }
-}
-@media (max-width: 425px) {
-  .light-mode {
-    font-size: 0.7rem !important;
-  }
-  .dark-mode {
-    font-size: 0.7rem !important;
-  }
-  .toggle {
-    font-size: 1rem;
-  }
-
-  .topInupt {
-    width: 70%;
-    margin-left: 3%;
-  }
-  .topInuptred {
-    width: 70%;
-    margin-left: 3%;
-  }
-}
-@media (max-width: 372px) {
-  .input {
-    display: none;
-  }
 }

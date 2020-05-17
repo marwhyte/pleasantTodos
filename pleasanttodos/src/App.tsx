@@ -9,6 +9,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon } from "@fortawesome/free-solid-svg-icons";
 import { faSun } from "@fortawesome/free-solid-svg-icons";
 
+interface task {
+  title: string;
+  isCompleted: boolean;
+  id: number;
+}
 const PurpleSwitch = withStyles({
   switchBase: {
     color: purple[300],
@@ -26,6 +31,10 @@ const PurpleSwitch = withStyles({
 
 function App() {
   const [darkMode, setDarkMode] = useState(getMode());
+  const [query, setQuery] = useState("");
+  const [todos, setTodos] = React.useState([
+    { title: "", isCompleted: false, id: 0 },
+  ]);
   function getMode() {
     var isReturningUser: boolean | string;
     var savedMode: boolean;
@@ -48,6 +57,21 @@ function App() {
       return false;
     }
   }
+  const searching = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(event.target.value);
+  };
+
+  const deletedAllCompleted = () => {
+    var deleteCompletedTasks: task[] = JSON.parse(
+      localStorage.getItem("todos") || ""
+    );
+    var returnedArray = deleteCompletedTasks.filter(
+      (item) => item.isCompleted === false
+    );
+    setTodos(returnedArray);
+    const stringedReturn = JSON.stringify(returnedArray);
+    localStorage.setItem("todos", stringedReturn);
+  };
 
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(darkMode));
@@ -59,21 +83,42 @@ function App() {
     return window.matchMedia("prefers-color-scheme: dark").matches;
   }
   return (
-    <div className={darkMode ? "dark-mode" : "light-mode"}>
-      <div className="toggle">
-        <PurpleSwitch
-          onChange={() => setDarkMode((prevMode: boolean) => !prevMode)}
-          name="checkedA"
-          color="secondary"
-        />
-        {darkMode ? (
-          <FontAwesomeIcon color="#FEFCD7" icon={faMoon} />
-        ) : (
-          <FontAwesomeIcon color="#FDB813" icon={faSun} />
-        )}
-      </div>
+    <div className="App">
+      <div className={darkMode ? "dark-mode" : "light-mode"}>
+        <div className="toggle">
+          <div className="formAndClear">
+            <input
+              type="text"
+              className="bottomInput"
+              placeholder="Search through todos"
+              name="search"
+              onChange={searching}
+            />
+            <div className="toolbar">
+              <button
+                className="clearButton"
+                onClick={() => deletedAllCompleted()}
+              >
+                Clear Completed
+              </button>
+            </div>
+          </div>
+          <div>
+            <PurpleSwitch
+              onChange={() => setDarkMode((prevMode: boolean) => !prevMode)}
+              name="checkedA"
+              color="secondary"
+            />
+            {darkMode ? (
+              <FontAwesomeIcon color="#FEFCD7" icon={faMoon} />
+            ) : (
+              <FontAwesomeIcon color="#FDB813" icon={faSun} />
+            )}
+          </div>
+        </div>
 
-      <Todos />
+        <Todos query={query} todos={todos} />
+      </div>
     </div>
   );
 }
