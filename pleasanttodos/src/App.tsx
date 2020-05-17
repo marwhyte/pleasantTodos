@@ -105,6 +105,7 @@ function App() {
           </div>
           <div>
             <PurpleSwitch
+              checked={darkMode}
               onChange={() => setDarkMode((prevMode: boolean) => !prevMode)}
               name="checkedA"
               color="secondary"

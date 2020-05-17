@@ -360,3 +360,41 @@ h1 {
   width: 100%;
   text-align: center;
 }
+
+//media queries
+
+@media (max-width: 900px) {
+  .toggle {
+    padding-left: 10px;
+    padding-right: 30px;
+  }
+}
+@media (max-width: 540px) {
+  .bottomButtonComplete {
+    width: 120px;
+  }
+  .bottomButton {
+    width: 120px;
+  }
+  .todo {
+    width: 300px;
+    .editTask {
+      width: 250px;
+    }
+  }
+  .todoCompleted {
+    width: 300px;
+    .editTask {
+      width: 250px;
+    }
+  }
+  .topInput {
+    width: 200px;
+  }
+  .bottomInput {
+    display: none;
+  }
+  .topFormatting {
+    font-size: 1rem;
+  }
+}
