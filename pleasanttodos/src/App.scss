@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap");
 
 $primaryLight: #bfefff;
-$selectedTitleLight: #f592a1;
+$selectedTitleLight: #e45c34;
 $primaryDark: #f4ae95;
 $darkestDark: #1e1e1e;
 $secondDarkestDark: #2c2c2c;
@@ -63,11 +63,16 @@ $primaryBorderColor: #ccc;
       border: 1px solid #0276f1 !important;
     }
   }
-  .topButton:hover {
-    background-color: #35a4f3 !important;
-  }
   .bottomButton:hover {
-    background-color: #35a4f3 !important;
+    background-color: #f19a7a !important;
+  }
+  .bottomButtonComplete {
+    background-color: #444343 !important;
+    color: white !important;
+  }
+
+  .bottomButtonComplete:hover {
+    background-color: #353434 !important;
   }
   .bottomInput {
     background-color: #272727 !important;
@@ -89,11 +94,14 @@ $primaryBorderColor: #ccc;
     background-color: $primaryDark;
   }
   .clearButton:hover {
-    background-color: #35a4f3 !important;
+    background-color: #f19a7a !important;
   }
 
   .topButton {
     background-color: $primaryDark !important;
+  }
+  .topButton:hover {
+    background-color: #f19a7a !important;
   }
   .bottomButton {
     background-color: $primaryDark;
@@ -230,6 +238,9 @@ h1 {
   margin-left: 10px;
   margin-top: 15px;
 }
+.clearButton:hover {
+  background-color: #87d8f3;
+}
 .bottomButton {
   border: none;
   padding: 10px;
@@ -250,7 +261,8 @@ h1 {
   padding: 10px;
   width: 155px;
   height: 50px;
-  background-color: #ffb6c1;
+  background-color: #5d9baf;
+  color: white;
   border-radius: 5px;
   cursor: pointer;
   margin-right: 10px;
@@ -278,7 +290,7 @@ h1 {
   border-radius: 5px;
 }
 .bottomButtonComplete:hover {
-  background-color: $selectedTitleLight;
+  background-color: #487888;
 }
 .toolbar {
   display: flex;
@@ -321,7 +333,7 @@ h1 {
   margin-left: 20px;
 }
 .topButton:hover {
-  background-color: #c0ffb3;
+  background-color: #87d8f3;
   color: #333;
 }
 .inputAndError {
