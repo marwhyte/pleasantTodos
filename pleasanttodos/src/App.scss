@@ -278,6 +278,7 @@ h1 {
   margin-right: 10px;
   margin-left: 10px;
 }
+
 .formAndClear {
   display: flex;
   justify-content: flex-start;
@@ -333,14 +334,14 @@ h1 {
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.3);
 }
 .topButton {
-  border: none;
-  padding: 10px;
-  width: 100px;
-  height: 50px;
-  background-color: $primaryLight;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 20px;
+  border: none !important;
+  padding: 10px !important;
+  width: 100px !important;
+  height: 50px !important;
+  background-color: $primaryLight !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+  margin-left: 20px !important;
 }
 .topButton:hover {
   background-color: #87d8f3;
