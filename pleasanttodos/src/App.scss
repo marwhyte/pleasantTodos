@@ -30,6 +30,9 @@ $primaryBorderColor: #ccc;
   .trash:hover {
     color: #369de7 !important;
   }
+  .insidegithub:hover {
+    background-color: $secondDarkestDark !important;
+  }
   .todo {
     background-color: $primaryDark !important;
     color: #272727 !important;
@@ -376,6 +379,27 @@ h1 {
   width: 100%;
   text-align: center;
 }
+.githublink {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+  p {
+    margin-left: 5px;
+  }
+  .insidegithub {
+    height: 25px;
+    padding: 20px 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+  }
+  .insidegithub:hover {
+    background-color: $greyPrimary;
+  }
+}
 
 //media queries
 
@@ -383,6 +407,9 @@ h1 {
   .toggle {
     padding-left: 10px;
     padding-right: 30px;
+  }
+  .githublink {
+    display: none;
   }
 }
 @media (max-width: 540px) {

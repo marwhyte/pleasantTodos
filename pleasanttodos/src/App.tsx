@@ -8,7 +8,7 @@ import { purple } from "@material-ui/core/colors";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon } from "@fortawesome/free-solid-svg-icons";
 import { faSun } from "@fortawesome/free-solid-svg-icons";
-
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 interface task {
   title: string;
   isCompleted: boolean;
@@ -119,6 +119,12 @@ function App() {
         </div>
 
         <Todos query={query} todos={todos} />
+        <div className="githublink">
+          <div className="insidegithub">
+            <FontAwesomeIcon icon={faGithub} />
+            <p>marwhyte</p>
+          </div>
+        </div>
       </div>
     </div>
   );
