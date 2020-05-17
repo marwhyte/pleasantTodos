@@ -147,6 +147,7 @@ const Todos: React.FC<Props> = (props: Props) => {
     };
     console.log(newTask);
     addTask(newTask);
+    reset();
   };
 
   return (

@@ -145,10 +145,15 @@ h1 {
   .editTask {
     background-color: $greyPrimary;
     border: none;
-    font-size: 1rem;
+    font-size: 0.9rem;
     border: 1px solid $greyPrimary;
     padding: 10px 4px;
     width: 400px;
+    resize: none;
+    font-family: "Raleway", sans-serif;
+    min-height: 42px;
+    max-height: 500px;
+    margin: 8px 0;
   }
   .editTask:hover {
     background-color: #d2e1fa;
@@ -172,10 +177,15 @@ h1 {
   .editTask {
     background-color: #ccc;
     border: none;
-    font-size: 1rem;
+    font-size: 0.9rem;
     border: 1px solid #ccc;
     padding: 10px 4px;
     width: 400px;
+    font-family: "Raleway", sans-serif;
+    min-height: 42px;
+    max-height: 500px;
+    margin: 8px 0;
+    resize: none;
   }
   .editTask:hover {
     background-color: #d2e1fa;
@@ -221,11 +231,11 @@ h1 {
   justify-content: space-evenly;
 }
 .trash {
-  color: black;
+  color: $selectedTitleLight;
   cursor: pointer;
 }
 .trash:hover {
-  color: red;
+  color: #85331a;
 }
 .clearButton {
   border: none;

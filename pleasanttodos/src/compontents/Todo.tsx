@@ -2,6 +2,7 @@ import * as React from "react";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Checkbox from "@material-ui/core/Checkbox";
+import TextareaAutosize from "react-autosize-textarea";
 
 interface task {
   title: string;
@@ -18,6 +19,12 @@ interface Props {
 }
 
 const Todo: React.FC<Props> = (props: Props) => {
+  const [input, setInput] = React.useState(props.task.title);
+
+  const searching = (e: string) => {
+    setInput(e);
+    props.editTask(e, props.task.id);
+  };
   return (
     <div className="withDaTrash">
       <div
@@ -31,13 +38,12 @@ const Todo: React.FC<Props> = (props: Props) => {
             color="primary"
             inputProps={{ "aria-label": "secondary checkbox" }}
           />
-          <input
-            type="text"
+          <TextareaAutosize
             className="editTask"
             placeholder="Add a title!"
             name="search"
-            value={props.task.title}
-            onChange={(e) => props.editTask(e.target.value, props.task.id)}
+            value={input}
+            onChange={(e) => searching(e.currentTarget.value)}
           />
         </div>
       </div>
