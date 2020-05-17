@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/pleasantTodos/static/css/main.d687ab15.chunk.css",
+    "main.js": "/pleasantTodos/static/js/main.9e347af1.chunk.js",
+    "main.js.map": "/pleasantTodos/static/js/main.9e347af1.chunk.js.map",
+    "runtime-main.js": "/pleasantTodos/static/js/runtime-main.30d706ce.js",
+    "runtime-main.js.map": "/pleasantTodos/static/js/runtime-main.30d706ce.js.map",
+    "static/js/2.84f9f1f7.chunk.js": "/pleasantTodos/static/js/2.84f9f1f7.chunk.js",
+    "static/js/2.84f9f1f7.chunk.js.map": "/pleasantTodos/static/js/2.84f9f1f7.chunk.js.map",
+    "index.html": "/pleasantTodos/index.html",
+    "precache-manifest.a7088fbea618971619e06564f7ec3776.js": "/pleasantTodos/precache-manifest.a7088fbea618971619e06564f7ec3776.js",
+    "service-worker.js": "/pleasantTodos/service-worker.js",
+    "static/css/main.d687ab15.chunk.css.map": "/pleasantTodos/static/css/main.d687ab15.chunk.css.map",
+    "static/js/2.84f9f1f7.chunk.js.LICENSE.txt": "/pleasantTodos/static/js/2.84f9f1f7.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.30d706ce.js",
+    "static/js/2.84f9f1f7.chunk.js",
+    "static/css/main.d687ab15.chunk.css",
+    "static/js/main.9e347af1.chunk.js"
+  ]
+}
