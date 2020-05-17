@@ -120,7 +120,12 @@ function App() {
 
         <Todos query={query} todos={todos} />
         <div className="githublink">
-          <div className="insidegithub">
+          <div
+            className="insidegithub"
+            onClick={() =>
+              window.open("https://github.com/marwhyte/pleasantTodos", "_blank")
+            }
+          >
             <FontAwesomeIcon icon={faGithub} />
             <p>marwhyte</p>
           </div>
