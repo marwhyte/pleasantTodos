@@ -6,6 +6,11 @@
 A todo app that lets you create and save todos to your browser with a pleasant user experience.
 
 
+## Tech Stack
+ - React
+ - SASS
+ 
+
 
 ## Contributing to PleasantTodos
 
