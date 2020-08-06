@@ -1,4 +1,4 @@
-# [pleasanttodos.club](https://www.pleasanttodos.club)
+# [pleasanttodos](https://www.pleasanttodos.club)
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/marwhyte/pleasantTodos)
 ![GitHub contributors](https://img.shields.io/github/contributors/marwhyte/pleasantTodos)
