@@ -154,7 +154,7 @@ const Todos: React.FC<Props> = (props: Props) => {
     <div className="wholetodo">
       <div className="topOfTodos">
         <h1>
-          Pleseant Todos <FontAwesomeIcon icon={faClipboardList} />
+          Pleasant Todos <FontAwesomeIcon icon={faClipboardList} />
         </h1>
         <div className="topFormatting">
           <p>making all your tasks easily accessible </p>
